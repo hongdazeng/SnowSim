@@ -10,6 +10,7 @@ WHITE = [255, 255, 255]
 
 MyScreenLength = 1920
 MyScreenWidth = 1080
+DisplayHelp = True
 
 # Set the height and width of the screen
 SIZE = [400, 400]
@@ -19,6 +20,7 @@ screen = pygame.display.set_mode((MyScreenLength, MyScreenWidth), pygame.FULLSCR
 pygame.display.set_caption("Snow Animation")
 
 background_image = pygame.image.load("background.png").convert()
+help_image = pygame.image.load("h2.png").convert()
 # Create an empty array
 snow_list = []
 
@@ -49,10 +51,20 @@ while not done:
                     SnowSize -= 1
             if pygame.key.get_pressed()[pygame.K_RIGHT]:
                 SnowSize += 1
+            if pygame.key.get_pressed()[pygame.K_h]:
+                if DisplayHelp:
+                    help_image = pygame.image.load("h2.png").convert()
+                    DisplayHelp = False
+                else:
+                    help_image = pygame.image.load("h1.png").convert()
+                    DisplayHelp = True
+            if pygame.key.get_pressed()[pygame.K_q]:
+                done = True
 
     # Set the screen background
     # screen.fill(BLACK)
     screen.blit(background_image, [0, 0])
+    screen.blit(help_image, [1500, 50])
 
     # Process each snow flake in the list
     for i in range(len(snow_list)):
