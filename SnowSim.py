@@ -16,6 +16,9 @@ DisplayHelp = True
 SIZE = [400, 400]
 SnowSize = 5
 
+DY = 1
+DX = 1
+
 screen = pygame.display.set_mode((MyScreenLength, MyScreenWidth), pygame.FULLSCREEN)
 pygame.display.set_caption("Snow Animation")
 
@@ -24,15 +27,14 @@ help_image = pygame.image.load("h2.png").convert()
 # Create an empty array
 snow_list = []
 
-# Loop 50 times and add a snow flake in a random x,y position
-for i in range(100):
+for i in range(500):
     x = random.randrange(0, MyScreenLength)
     y = random.randrange(0, MyScreenWidth)
     snow_list.append([x, y])
 
 clock = pygame.time.Clock()
 
-# Loop until the user clicks the close button.
+# Loop until the user press q
 done = False
 while not done:
 
@@ -40,31 +42,42 @@ while not done:
         if event.type == pygame.QUIT:  # If user clicked close
             done = True  # Flag that we are done so we exit this loop
         elif event.type == pygame.KEYDOWN:
-            if pygame.key.get_pressed()[pygame.K_UP]:
-                x = random.randrange(0, MyScreenLength)
-                y = random.randrange(0, MyScreenWidth)
-                snow_list.append([x, y])
-            if pygame.key.get_pressed()[pygame.K_DOWN]:
-                snow_list.pop(random.randrange(len(snow_list)))
-            if pygame.key.get_pressed()[pygame.K_LEFT]:
+            if pygame.key.get_pressed()[pygame.K_q]:
+                done = True
+            elif pygame.key.get_pressed()[pygame.K_UP]:
+                for b in range(10):
+                    x = random.randrange(0, MyScreenLength)
+                    y = random.randrange(0, MyScreenWidth)
+                    snow_list.append([x, y])
+            elif pygame.key.get_pressed()[pygame.K_DOWN]:
+                if len(snow_list) > 20:
+                    for c in range(10):
+                        snow_list.pop(random.randrange(len(snow_list)))
+            elif pygame.key.get_pressed()[pygame.K_LEFT]:
                 if SnowSize > 1:
                     SnowSize -= 1
-            if pygame.key.get_pressed()[pygame.K_RIGHT]:
+            elif pygame.key.get_pressed()[pygame.K_RIGHT]:
                 SnowSize += 1
-            if pygame.key.get_pressed()[pygame.K_h]:
+            elif pygame.key.get_pressed()[pygame.K_h]:
                 if DisplayHelp:
                     help_image = pygame.image.load("h2.png").convert()
                     DisplayHelp = False
                 else:
                     help_image = pygame.image.load("h1.png").convert()
                     DisplayHelp = True
-            if pygame.key.get_pressed()[pygame.K_q]:
-                done = True
+            elif pygame.key.get_pressed()[pygame.K_KP8]:
+                DY += 1
+            elif pygame.key.get_pressed()[pygame.K_KP2]:
+                DY -= 1
+            elif pygame.key.get_pressed()[pygame.K_KP6]:
+                DX += 1
+            elif pygame.key.get_pressed()[pygame.K_KP4]:
+                DX -= 1
+            elif pygame.key.get_pressed()[pygame.K_KP0]:
+                DX = 1
+                DY = 1
 
-    # Set the screen background
-    # screen.fill(BLACK)
     screen.blit(background_image, [0, 0])
-    screen.blit(help_image, [1500, 50])
 
     # Process each snow flake in the list
     for i in range(len(snow_list)):
@@ -72,18 +85,29 @@ while not done:
         # Draw the snow flake
         pygame.draw.circle(screen, WHITE, snow_list[i], SnowSize)
 
-        # Move the snow flake down one pixel
-        snow_list[i][1] += 1
+        # Move the snow flake based on dx and dy
+        snow_list[i][0] += DX
+        snow_list[i][1] += DY
 
-        # reset the snow if complete left the screen
+        # reset the snow if it completely left the screen
         if snow_list[i][1] > MyScreenWidth + SnowSize:
-            # Reset it just above the top
+            # Reset it some distance above the top
             y = random.randrange(-10*SnowSize, -2*SnowSize)
             snow_list[i][1] = y
             # Give it a new x position
             x = random.randrange(0, MyScreenLength)
             snow_list[i][0] = x
 
-    # Go ahead and update the screen with what we've drawn.
+        if snow_list[i][0] > MyScreenLength + SnowSize:
+            # Reset it some distance left the top
+            x = random.randrange(-10*SnowSize, -2*SnowSize)
+            snow_list[i][0] = x
+            # Give it a new x position
+            y = random.randrange(0, MyScreenWidth)
+            snow_list[i][1] = y
+
+    screen.blit(help_image, [1500, 50])
+
+    # Yo update
     pygame.display.flip()
-    clock.tick(20)
+    clock.tick(60)
