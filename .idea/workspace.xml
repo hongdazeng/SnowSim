@@ -20,7 +20,7 @@
   <component name="ChangesViewManager" flattened_view="true" show_ignored="false" />
   <component name="CoverageDataManager">
     <SUITE FILE_PATH="coverage/SnowSim$SnowSim.coverage" NAME="SnowSim Coverage Results" MODIFIED="1416702546842" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
-    <SUITE FILE_PATH="coverage/SnowSim$Ski.coverage" NAME="Ski Coverage Results" MODIFIED="1416724860792" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/SnowSim$Ski.coverage" NAME="Ski Coverage Results" MODIFIED="1416726440789" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/SnowSim$Snake.coverage" NAME="Snake Coverage Results" MODIFIED="1416693691385" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
   </component>
   <component name="CreatePatchCommitExecutor">
@@ -50,33 +50,12 @@
       <file leaf-file-name="Ski.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/Ski.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.39945653" vertical-offset="1831" max-vertical-offset="2839">
-              <caret line="209" column="50" selection-start-line="209" selection-start-column="50" selection-end-line="209" selection-end-column="50" />
+            <state vertical-scroll-proportion="0.67663044" vertical-offset="2256" max-vertical-offset="4063">
+              <caret line="182" column="21" selection-start-line="182" selection-start-column="21" selection-end-line="182" selection-end-column="21" />
               <folding>
                 <element signature="e#260#269#0" expanded="true" />
                 <element signature="e#1026#1564#0" expanded="false" />
-                <element signature="e#1605#3395#0" expanded="false" />
               </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="README.md" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/README.md">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-0.0" vertical-offset="0" max-vertical-offset="170">
-              <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name=".gitignore" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/.gitignore">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-0.0" vertical-offset="0" max-vertical-offset="1020">
-              <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-              <folding />
             </state>
           </provider>
         </entry>
@@ -521,14 +500,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/README.md">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="732">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/SnowSim.py">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="1257" max-vertical-offset="2856">
@@ -539,14 +510,54 @@
         </state>
       </provider>
     </entry>
+    <entry file="uml://Python/#C:/MyCode/SnowSim/Ski.py">
+      <provider selected="true" editor-type-id="UmlEditorProvider">
+        <state>
+          <ID>Python</ID>
+          <OriginalElement>#C:/MyCode/SnowSim/Ski.py</OriginalElement>
+          <nodes>
+            <node x="54.75" y="0.0">Sprite</node>
+            <node x="100.0" y="84.0">Ski.Bird</node>
+            <node x="0.0" y="84.0">Ski.Gun</node>
+          </nodes>
+          <notes />
+          <edges>
+            <edge source="Ski.Gun" target="Sprite">
+              <point x="0.0" y="-17.0" />
+              <point x="40.0" y="59.0" />
+              <point x="72.5" y="59.0" />
+              <point x="-17.75" y="17.0" />
+            </edge>
+            <edge source="Ski.Bird" target="Sprite">
+              <point x="0.0" y="-17.0" />
+              <point x="140.5" y="59.0" />
+              <point x="108.0" y="59.0" />
+              <point x="17.75" y="17.0" />
+            </edge>
+          </edges>
+          <settings layout="Hierarchic Group" zoom="1.0" x="-457.0" y="-55.5" />
+          <SelectedNodes>
+            <node>Ski.Gun</node>
+          </SelectedNodes>
+          <Categories />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/README.md">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="732">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/Ski.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.39945653" vertical-offset="1831" max-vertical-offset="2839">
-          <caret line="209" column="50" selection-start-line="209" selection-start-column="50" selection-end-line="209" selection-end-column="50" />
+        <state vertical-scroll-proportion="0.67663044" vertical-offset="2256" max-vertical-offset="4063">
+          <caret line="182" column="21" selection-start-line="182" selection-start-column="21" selection-end-line="182" selection-end-column="21" />
           <folding>
             <element signature="e#260#269#0" expanded="true" />
             <element signature="e#1026#1564#0" expanded="false" />
-            <element signature="e#1605#3395#0" expanded="false" />
           </folding>
         </state>
       </provider>

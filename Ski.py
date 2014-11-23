@@ -69,7 +69,7 @@ class Bird(pygame.sprite.Sprite):
         screen = pygame.display.get_surface()
         self.area = screen.get_rect()
         self.rect.topleft = 10, 10
-        self.move = 9
+        self.move = 8
         self.move1 = 9
         self.onHit = 0
 
@@ -114,15 +114,18 @@ class Bird(pygame.sprite.Sprite):
             self.original = self.image
 
     def movefaster(self):
+
+        move_point = 4
+
         if self.move > 0:
-            self.move += 5
+            self.move += move_point
         elif self.move < 0:
-            self.move -= 5
+            self.move -= move_point
 
         if self.move1 > 0:
-            self.move1 += 5
+            self.move1 += move_point
         elif self.move1 < 0:
-            self.move -= 5
+            self.move -= move_point
 
     def completestop(self):
         self.move = 0
@@ -132,7 +135,7 @@ class Bird(pygame.sprite.Sprite):
 def main():
 
     pygame.init()
-    screen = pygame.display.set_mode((800, 600))
+    screen = pygame.display.set_mode((800, 600), pygame.FULLSCREEN)
     pygame.display.set_caption('Duck Hunt')
     pygame.mouse.set_visible(0)
 
@@ -157,6 +160,7 @@ def main():
     clock = pygame.time.Clock()
     miss_sound = load_sound('gun.wav')
     hit_sound = load_sound('exp.wav')
+    level_sound = load_sound('tone.wav')
     sound_name = os.path.join('data', 'star.ogg')
     pygame.mixer.music.load(sound_name)
     pygame.mixer.music.play(0)
@@ -172,12 +176,13 @@ def main():
     gunsight = Gun()
 
     allsprites = pygame.sprite.RenderPlain((gunsight, bird))
+    label_name = myfont.render("Created by Hongda Zeng", 1, (204, 22, 0))
 
     # Main Loop
     while 1:
-        clock.tick(60)
+        clock.tick(50)
         label1 = myfont.render("Score: " + str(score), 1, (204, 22, 0))
-        label2 = myfont.render("Level: " + str(level), 1, (204, 22, 0))
+        label2 = myfont.render("Level: " + str(level) + " Spd" + str(abs(bird.move)), 1, (204, 22, 0))
 
         # Handle Input Events
         for event in pygame.event.get():
@@ -195,7 +200,8 @@ def main():
                     score += 1
                     s_level += 0.2
 
-                    if s_level == 1 and score > 2:
+                    if s_level > 0.9 and score > 2:
+                        level_sound.play()
                         rounds = 10
                         s_level = 0
                         level += 1
@@ -205,24 +211,25 @@ def main():
                     miss_sound.play()
 
             if rounds <= 0:
-                        bird.completestop()
-                        label4 = myfont.render("-=Game Over=- Press any key to quit", 1, (204, 22, 0))
-                        pygame.mixer.music.pause()
-                        a = True
-                        while a:
-                            screen.blit(label1, (100, 500))
-                            screen.blit(label2, (120, 550))
-                            # noinspection PyUnboundLocalVariable
-                            screen.blit(label3, (400, 500))
-                            screen.blit(label4, (200, 300))
-                            allsprites.draw(screen)
-                            pygame.display.flip()
-                            # noinspection PyAssignmentToLoopOrWithParameter
-                            for event in pygame.event.get():  # User did something
-                                if event.type == pygame.QUIT:  # If user clicked close
-                                    return
-                                elif event.type == pygame.KEYDOWN:
-                                    return
+                    bird.completestop()
+                    label4 = myfont.render("-=Game Over=- Press any key to quit", 1, (204, 22, 0))
+                    pygame.mixer.music.pause()
+                    a = True
+                    while a:
+                        screen.blit(label1, (100, 500))
+                        screen.blit(label2, (120, 550))
+                        # noinspection PyUnboundLocalVariable
+                        screen.blit(label3, (400, 500))
+                        screen.blit(label4, (200, 300))
+                        screen.blit(label_name, (420, 550))
+                        allsprites.draw(screen)
+                        pygame.display.flip()
+                        # noinspection PyAssignmentToLoopOrWithParameter
+                        for event in pygame.event.get():  # User did something
+                            if event.type == pygame.QUIT:  # If user clicked close
+                                return
+                            elif event.type == pygame.KEYDOWN:
+                                return
 
             elif event.type is MOUSEBUTTONUP:
                 gunsight.pullback()
@@ -235,6 +242,7 @@ def main():
         screen.blit(label1, (100, 500))
         screen.blit(label2, (120, 550))
         screen.blit(label3, (400, 500))
+        screen.blit(label_name, (420, 550))
         allsprites.draw(screen)
         pygame.display.flip()
 
