@@ -1,6 +1,7 @@
 # Import a library of functions called 'pygame'
 import pygame
 import random
+import os
 
 # Initialize the game engine
 pygame.init()
@@ -28,12 +29,16 @@ label2 = myfont.render("Christmas!", 1, (204, 22, 0))
 screen = pygame.display.set_mode((MyScreenLength, MyScreenWidth), pygame.FULLSCREEN)
 pygame.display.set_caption("Snow Animation")
 
-background_image = pygame.image.load("background.png").convert()
-help_image = pygame.image.load("h2.png").convert()
+background = os.path.join('data', "background.png")
+background_image = pygame.image.load(background).convert()
+help2 = os.path.join('data', 'h2.png')
+help_image = pygame.image.load(help2).convert()
 
-pygame.mixer.music.load('silent.ogg')
+soundName = fullname = os.path.join('data', 'silent.ogg')
+pygame.mixer.music.load(soundName)
 pygame.mixer.music.play(0)
 
+help1 = os.path.join('data', 'h1.png')
 # Create an empty array
 Snow_List = []
 
@@ -70,10 +75,10 @@ while not done:
                 SnowSize += 1
             elif pygame.key.get_pressed()[pygame.K_h]:
                 if DisplayHelp:
-                    help_image = pygame.image.load("h2.png").convert()
+                    help_image = pygame.image.load(help2).convert()
                     DisplayHelp = False
                 else:
-                    help_image = pygame.image.load("h1.png").convert()
+                    help_image = pygame.image.load(help1).convert()
                     DisplayHelp = True
             elif pygame.key.get_pressed()[pygame.K_KP8]:
                 DY += 1

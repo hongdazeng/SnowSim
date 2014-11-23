@@ -145,7 +145,6 @@ def main():
     score = 0
 
     myfont = pygame.font.SysFont("monospace", 20)
-    label1 = myfont.render("Score: " + str(score), 1, (204, 22, 0))
 
     bird = Bird()
     gunsight = Gun()
