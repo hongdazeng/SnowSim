@@ -1,4 +1,4 @@
-SnowSim
+Purdue Computer Science Women's Network / Microsoft Hackathon Project
 =======
 
-SnowSim.py will create a interactive holiday greeting while Ski.py is a python version of duck hunt!
+HolidayCard.py will create a interactive holiday greeting while BirdShoot.py is a python version of duck hunt!
