@@ -13,6 +13,7 @@ import os
 import pygame
 from pygame.locals import *
 
+
 # functions to create our resources
 def load_image(name, color_key=None):
     fullname = os.path.join('data', name)
@@ -81,17 +82,17 @@ class Bird(pygame.sprite.Sprite):
 
     def _walk(self):
 
-        newpos = self.rect.move((self.move, self.move1))
+        new_pos = self.rect.move((self.move, self.move1))
         if self.rect.left < self.area.left or self.rect.right > self.area.right:
             self.move = -self.move
-            newpos = self.rect.move((self.move, 0))
+            new_pos = self.rect.move((self.move, 0))
             self.image = pygame.transform.flip(self.image, 1, 0)
 
         if self.rect.top < self.area.top or self.rect.bottom > self.area.bottom - 150:
             self.move1 = -self.move1
 
-            newpos = self.rect.move((self.move, self.move1))
-        self.rect = newpos
+            new_pos = self.rect.move((self.move, self.move1))
+        self.rect = new_pos
 
     def _spin(self):
 
@@ -154,8 +155,11 @@ def main():
 
     # Prepare Game Objects
     clock = pygame.time.Clock()
-    whiff_sound = load_sound('gun.wav')
-    punch_sound = load_sound('exp.wav')
+    miss_sound = load_sound('gun.wav')
+    hit_sound = load_sound('exp.wav')
+    sound_name = os.path.join('data', 'star.ogg')
+    pygame.mixer.music.load(sound_name)
+    pygame.mixer.music.play(0)
 
     score = 0
     s_level = 0
@@ -186,7 +190,7 @@ def main():
                 rounds -= 1
 
                 if gunsight.hitontarget(bird):
-                    punch_sound.play()
+                    hit_sound.play()
                     bird.gothit()
                     score += 1
                     s_level += 0.2
@@ -198,10 +202,12 @@ def main():
                         bird.movefaster()
 
                 else:
-                    whiff_sound.play()
-                    if rounds == 0:
+                    miss_sound.play()
+
+            if rounds <= 0:
                         bird.completestop()
                         label4 = myfont.render("-=Game Over=- Press any key to quit", 1, (204, 22, 0))
+                        pygame.mixer.music.pause()
                         a = True
                         while a:
                             screen.blit(label1, (100, 500))
