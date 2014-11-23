@@ -113,6 +113,17 @@ class Bird(pygame.sprite.Sprite):
             self.onHit = 1
             self.original = self.image
 
+    def movefaster(self):
+        if self.move > 0:
+            self.move += 5
+        elif self.move < 0:
+            self.move -= 5
+
+        if self.move1 > 0:
+            self.move1 += 5
+        elif self.move1 < 0:
+            self.move -= 5
+
 
 def main():
 
@@ -143,6 +154,8 @@ def main():
     punch_sound = load_sound('exp.wav')
 
     score = 0
+    s_level = 0
+    level = 0
 
     myfont = pygame.font.SysFont("monospace", 20)
 
@@ -155,6 +168,8 @@ def main():
     while 1:
         clock.tick(60)
         label1 = myfont.render("Score: " + str(score), 1, (204, 22, 0))
+        label2 = myfont.render("Level: " + str(level), 1, (204, 22, 0))
+
 
         # Handle Input Events
         for event in pygame.event.get():
@@ -167,6 +182,12 @@ def main():
                     punch_sound.play()
                     bird.gothit()
                     score += 1
+                    s_level += 0.2
+                    if s_level == 1:
+                        s_level = 0
+                        level += 1
+                        bird.movefaster()
+
                 else:
                     whiff_sound.play()
             elif event.type is MOUSEBUTTONUP:
@@ -174,11 +195,11 @@ def main():
 
         allsprites.update()
 
-
         screen.blit(background, (0, 0))
         pygame.draw.line(background, (200, 200, 200), (0, 450), (800, 450), 1)
         # Draw Everything
         screen.blit(label1, (100, 500))
+        screen.blit(label2, (120, 550))
         allsprites.draw(screen)
         pygame.display.flip()
 
