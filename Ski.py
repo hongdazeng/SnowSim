@@ -13,7 +13,6 @@ import os
 import pygame
 from pygame.locals import *
 
-
 # functions to create our resources
 def load_image(name, color_key=None):
     fullname = os.path.join('data', name)
@@ -40,7 +39,6 @@ def load_sound(name):
 
 # classes for our game objects
 class Gun(pygame.sprite.Sprite):
-    """moves a clenched fist on the screen, following the mouse"""
 
     def __init__(self):
         pygame.sprite.Sprite.__init__(self)
@@ -89,7 +87,7 @@ class Bird(pygame.sprite.Sprite):
             newpos = self.rect.move((self.move, 0))
             self.image = pygame.transform.flip(self.image, 1, 0)
 
-        if self.rect.top < self.area.top or self.rect.bottom > self.area.bottom -150:
+        if self.rect.top < self.area.top or self.rect.bottom > self.area.bottom - 150:
             self.move1 = -self.move1
 
             newpos = self.rect.move((self.move, self.move1))
@@ -111,6 +109,7 @@ class Bird(pygame.sprite.Sprite):
 
         if not self.onHit:
             self.onHit = 1
+            # noinspection PyAttributeOutsideInit
             self.original = self.image
 
     def movefaster(self):
@@ -124,6 +123,10 @@ class Bird(pygame.sprite.Sprite):
         elif self.move1 < 0:
             self.move -= 5
 
+    def completestop(self):
+        self.move = 0
+        self.move1 = 0
+
 
 def main():
 
@@ -133,6 +136,7 @@ def main():
     pygame.mouse.set_visible(0)
 
     # Background
+    # noinspection PyArgumentList
     background = pygame.Surface(screen.get_size())
     background = background.convert()
     background.fill((140, 180, 20))
@@ -156,6 +160,7 @@ def main():
     score = 0
     s_level = 0
     level = 0
+    rounds = 10
 
     myfont = pygame.font.SysFont("monospace", 20)
 
@@ -170,7 +175,6 @@ def main():
         label1 = myfont.render("Score: " + str(score), 1, (204, 22, 0))
         label2 = myfont.render("Level: " + str(level), 1, (204, 22, 0))
 
-
         # Handle Input Events
         for event in pygame.event.get():
             if event.type == QUIT:
@@ -178,21 +182,45 @@ def main():
             elif event.type == KEYDOWN and event.key == K_ESCAPE:
                 return
             elif event.type == MOUSEBUTTONDOWN:
+
+                rounds -= 1
+
                 if gunsight.hitontarget(bird):
                     punch_sound.play()
                     bird.gothit()
                     score += 1
                     s_level += 0.2
-                    if s_level == 1:
+
+                    if s_level == 1 and score > 2:
+                        rounds = 10
                         s_level = 0
                         level += 1
                         bird.movefaster()
 
                 else:
                     whiff_sound.play()
+                    if rounds == 0:
+                        bird.completestop()
+                        label4 = myfont.render("-=Game Over=- Press any key to quit", 1, (204, 22, 0))
+                        a = True
+                        while a:
+                            screen.blit(label1, (100, 500))
+                            screen.blit(label2, (120, 550))
+                            # noinspection PyUnboundLocalVariable
+                            screen.blit(label3, (400, 500))
+                            screen.blit(label4, (200, 300))
+                            allsprites.draw(screen)
+                            pygame.display.flip()
+                            # noinspection PyAssignmentToLoopOrWithParameter
+                            for event in pygame.event.get():  # User did something
+                                if event.type == pygame.QUIT:  # If user clicked close
+                                    return
+                                elif event.type == pygame.KEYDOWN:
+                                    return
+
             elif event.type is MOUSEBUTTONUP:
                 gunsight.pullback()
-
+        label3 = myfont.render("Bullets: " + str(rounds), 1, (204, 22, 0))
         allsprites.update()
 
         screen.blit(background, (0, 0))
@@ -200,6 +228,7 @@ def main():
         # Draw Everything
         screen.blit(label1, (100, 500))
         screen.blit(label2, (120, 550))
+        screen.blit(label3, (400, 500))
         allsprites.draw(screen)
         pygame.display.flip()
 
